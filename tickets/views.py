@@ -1,8 +1,9 @@
 from django.http.response import JsonResponse
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from  rest_framework import status
+from rest_framework import status
 
 from tickets.models import Guest
 from tickets.serializers import GuestSeriaizer
@@ -32,9 +33,14 @@ def withModel(request):
     return JsonResponse(data)
 
 
-# Method 3: Function Based View (FBV)
+# Method 3: REST Function Based View (FBV)
 @api_view(['GET', 'POST'])
 def guest_list(request):
+    """
+    Function based view:
+    - List all code guests, 
+    - or create a new guest.
+    """
     if request.method == "GET":
         guests = Guest.objects.all()
         serializer = GuestSeriaizer(guests, many=True)
@@ -44,7 +50,30 @@ def guest_list(request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def guest_pk_query(request, pk):
+    """
+    Function based view:
+    - Retrieve,
+    - Update or
+    - Delete a guest.
+    """
+    guest = get_object_or_404(Guest, pk=pk)
+    if request.method == "GET":
+        serializer = GuestSeriaizer(guest)
+        return Response(serializer.data)
+    elif request.method == "PUT":
+        serializer = GuestSeriaizer(guest, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == "DELETE":
+        guest.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET'])

@@ -22,5 +22,6 @@ urlpatterns = [
     path('jsonresno/', views.classic, name='jsonresno_guests'),
     path('jsonresmodel/', views.withModel, name='jsonresmo_guests'),
     path('guests/', views.guest_list, name='fbv_guest_list'),
+    path('guests/<int:pk>/', views.guest_pk_query, name='fbv_guest_pk_query'),
     path('', views.api_root),
 ]
