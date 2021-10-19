@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from tickets import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('jsonresno/', views.classic, name='jsonresno_guests'),
+    path('jsonresmodel/', views.withModel, name='jsonresmo_guests'),
+    path('guests/', views.guest_list, name='fbv_guest_list'),
+    path('', views.api_root),
 ]
