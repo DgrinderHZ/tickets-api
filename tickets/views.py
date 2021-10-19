@@ -6,7 +6,7 @@ from rest_framework.reverse import reverse
 from rest_framework import status
 
 from tickets.models import Guest
-from tickets.serializers import GuestSeriaizer
+from tickets.serializers import GuestSerializer
 
 
 # Method 1: No REST, No Model
@@ -38,15 +38,15 @@ def withModel(request):
 def guest_list(request):
     """
     Function based view:
-    - List all code guests, 
+    - List all code guests,
     - or create a new guest.
     """
     if request.method == "GET":
         guests = Guest.objects.all()
-        serializer = GuestSeriaizer(guests, many=True)
+        serializer = GuestSerializer(guests, many=True)
         return Response(serializer.data)
     else:
-        serializer = GuestSeriaizer(data=request.data)
+        serializer = GuestSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -63,10 +63,10 @@ def guest_pk_query(request, pk):
     """
     guest = get_object_or_404(Guest, pk=pk)
     if request.method == "GET":
-        serializer = GuestSeriaizer(guest)
+        serializer = GuestSerializer(guest)
         return Response(serializer.data)
     elif request.method == "PUT":
-        serializer = GuestSeriaizer(guest, data=request.data)
+        serializer = GuestSerializer(guest, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -86,5 +86,5 @@ def api_root(request, format=None):
         'jsonresno_guests': reverse('jsonresno_guests', request=request, format=format),
         'jsonresmo_guests': reverse('jsonresmo_guests', request=request, format=format),
         'fbv_guest_list': reverse('fbv_guest_list', request=request, format=format),
-
+        'cbv_guest_list': reverse('cbv_guest_list', request=request, format=format),
     })
