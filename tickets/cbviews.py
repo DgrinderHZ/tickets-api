@@ -80,6 +80,12 @@ class GuestPkQueryMXN(mxn.RetrieveModelMixin,
                       mxn.UpdateModelMixin,
                       mxn.DestroyModelMixin,
                       generics.GenericAPIView):
+    """
+    Class based view, Mixins Based:
+    - Retrieve,
+    - Update or
+    - Delete a guest.
+    """
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
 
@@ -91,3 +97,25 @@ class GuestPkQueryMXN(mxn.RetrieveModelMixin,
 
     def delete(self, request, pk):
         return self.destroy(request)
+
+
+# Method 5: REST Class Based View (CBV) using generics
+class GuestListGNRX(generics.ListCreateAPIView):
+    """
+    Class based view, generics Based:
+    - List all code guests,
+    - or create a new guest.
+    """
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+
+class GuestPkQueryGNRX(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Class based view, generics Based:
+    - Retrieve,
+    - Update or
+    - Delete a guest.
+    """
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer

@@ -27,6 +27,7 @@ urlpatterns = [
     path('rest/cbv/guests/<int:pk>/', cbviews.GuestPkQuery.as_view(), name='cbv_guest_pk_query'),
     path('rest/mxn/guests/', cbviews.GuestListMXN.as_view(), name='mxn_guest_list'),
     path('rest/mxn/guests/<int:pk>/', cbviews.GuestPkQueryMXN.as_view(), name='mxn_guest_pk_query'),
-
+    path('rest/gnrx/guests/', cbviews.GuestListGNRX.as_view(), name='gnrx_guest_list'),
+    path('rest/gnrx/guests/<int:pk>/', cbviews.GuestPkQueryGNRX.as_view(), name='gnrx_guest_pk_query'),
     path('', views.api_root),
 ]
