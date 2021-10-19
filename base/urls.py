@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from tickets import views
+from tickets import views, cbviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('jsonresno/', views.classic, name='jsonresno_guests'),
     path('jsonresmodel/', views.withModel, name='jsonresmo_guests'),
-    path('guests/', views.guest_list, name='fbv_guest_list'),
-    path('guests/<int:pk>/', views.guest_pk_query, name='fbv_guest_pk_query'),
+    path('rest/fbv/guests/', views.guest_list, name='fbv_guest_list'),
+    path('rest/fbv/guests/<int:pk>/', views.guest_pk_query, name='fbv_guest_pk_query'),
+    path('rest/cbv/guests/', cbviews.GuestList.as_view(), name='cbv_guest_list'),
+    path('rest/cbv/guests/<int:pk>/', cbviews.GuestPkQuery.as_view(), name='cbv_guest_pk_query'),
+
     path('', views.api_root),
 ]
