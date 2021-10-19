@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import serializers, status
+from rest_framework import status, generics, mixins as mxn
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -7,6 +7,8 @@ from .models import Guest
 from .serializers import GuestSerializer
 
 
+# Continuation of views.py
+# Method 4: REST Class Based View (CBV)
 class GuestList(APIView):
     """
     Class based view:
@@ -53,3 +55,39 @@ class GuestPkQuery(APIView):
         guest = self.get_object(pk)
         guest.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# Method 4: REST Class Based View (CBV) using MIXINS
+class GuestListMXN(mxn.ListModelMixin,
+                   mxn.CreateModelMixin,
+                   generics.GenericAPIView):
+    """
+    Class based view, Mixins Based:
+    - List all code guests,
+    - or create a new guest.
+    """
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+    def get(self, request):
+        return self.list(request)
+
+    def post(self, request):
+        return self.create(request)
+
+
+class GuestPkQueryMXN(mxn.RetrieveModelMixin,
+                      mxn.UpdateModelMixin,
+                      mxn.DestroyModelMixin,
+                      generics.GenericAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request)
+
+    def put(self, request, pk):
+        return self.update(request)
+
+    def delete(self, request, pk):
+        return self.destroy(request)

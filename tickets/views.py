@@ -87,4 +87,6 @@ def api_root(request, format=None):
         'jsonresmo_guests': reverse('jsonresmo_guests', request=request, format=format),
         'fbv_guest_list': reverse('fbv_guest_list', request=request, format=format),
         'cbv_guest_list': reverse('cbv_guest_list', request=request, format=format),
+        'mxn_guest_list': reverse('mxn_guest_list', request=request, format=format),
+
     })
