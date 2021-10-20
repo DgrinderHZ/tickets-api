@@ -89,6 +89,7 @@ def api_root(request, format=None):
         'cbv_guest_list': reverse('cbv_guest_list', request=request, format=format),
         'mxn_guest_list': reverse('mxn_guest_list', request=request, format=format),
         'gnrx_guest_list': reverse('gnrx_guest_list', request=request, format=format),
-
+        # For viewsets: <basename>-<action>
+        'guest_viewset': reverse('guests-list', request=request, format=format),
 
     })

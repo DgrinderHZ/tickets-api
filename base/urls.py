@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls.conf import include
+from rest_framework.routers import DefaultRouter
 from tickets import views, cbviews
+
+
+router = DefaultRouter()
+router.register("guests", cbviews.GuestViewSet, basename='guests')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +35,6 @@ urlpatterns = [
     path('rest/mxn/guests/<int:pk>/', cbviews.GuestPkQueryMXN.as_view(), name='mxn_guest_pk_query'),
     path('rest/gnrx/guests/', cbviews.GuestListGNRX.as_view(), name='gnrx_guest_list'),
     path('rest/gnrx/guests/<int:pk>/', cbviews.GuestPkQueryGNRX.as_view(), name='gnrx_guest_pk_query'),
+    path('rest/viewsets/', include(router.urls)),
     path('', views.api_root),
 ]

@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status, generics, mixins as mxn
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -113,6 +114,21 @@ class GuestListGNRX(generics.ListCreateAPIView):
 class GuestPkQueryGNRX(generics.RetrieveUpdateDestroyAPIView):
     """
     Class based view, generics Based:
+    - Retrieve,
+    - Update or
+    - Delete a guest.
+    """
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+
+# Method 6: REST Class Based View (CBV) using viewsets
+# All In One CRUD
+class GuestViewSet(viewsets.ModelViewSet):
+    """
+    Class based view, viewset Based:
+    - List all code guests,
+    - Create,
     - Retrieve,
     - Update or
     - Delete a guest.
