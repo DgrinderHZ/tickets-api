@@ -3,9 +3,12 @@ from rest_framework import status, generics, mixins as mxn
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Guest, Movie, Reservation
-from .serializers import GuestSerializer, MovieSerializer, ReservationSerializer
+from .serializers import GuestSerializer,\
+    MovieSerializer, ReservationSerializer
 
 
 # Continuation of views.py
@@ -16,6 +19,9 @@ class GuestList(APIView):
     - List all code guests,
     - or create a new guest.
     """
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         guests = Guest.objects.all()
         serializer = GuestSerializer(guests, many=True)
@@ -36,6 +42,9 @@ class GuestPkQuery(APIView):
     - Update or
     - Delete a guest.
     """
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def get_object(self, pk):
         return get_object_or_404(Guest, pk=pk)
 
@@ -67,6 +76,8 @@ class GuestListMXN(mxn.ListModelMixin,
     - List all code guests,
     - or create a new guest.
     """
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
 
@@ -87,6 +98,8 @@ class GuestPkQueryMXN(mxn.RetrieveModelMixin,
     - Update or
     - Delete a guest.
     """
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
 
@@ -107,6 +120,8 @@ class GuestListGNRX(generics.ListCreateAPIView):
     - List all code guests,
     - or create a new guest.
     """
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
 
@@ -118,6 +133,8 @@ class GuestPkQueryGNRX(generics.RetrieveUpdateDestroyAPIView):
     - Update or
     - Delete a guest.
     """
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
 
@@ -135,6 +152,8 @@ class GuestViewSet(viewsets.ModelViewSet):
     """
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
 class MovieViewSet(viewsets.ModelViewSet):
@@ -148,6 +167,8 @@ class MovieViewSet(viewsets.ModelViewSet):
     """
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
 class ReservationViewSet(viewsets.ModelViewSet):
@@ -161,3 +182,5 @@ class ReservationViewSet(viewsets.ModelViewSet):
     """
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]

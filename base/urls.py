@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 from tickets import views, cbviews
 
 
@@ -48,4 +49,7 @@ urlpatterns = [
 
     path('', views.api_root),
     path('api-auth/', include('rest_framework.urls')),
+
+    # Token Auth
+    path('api-token-auth', obtain_auth_token)
 ]
