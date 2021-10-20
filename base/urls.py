@@ -45,5 +45,7 @@ urlpatterns = [
     path('rest/gnrx/guests/', cbviews.GuestListGNRX.as_view(), name='gnrx_guest_list'),
     path('rest/gnrx/guests/<int:pk>/', cbviews.GuestPkQueryGNRX.as_view(), name='gnrx_guest_pk_query'),
     path('rest/viewsets/', include(router.urls)),
+
     path('', views.api_root),
+    path('api-auth/', include('rest_framework.urls')),
 ]

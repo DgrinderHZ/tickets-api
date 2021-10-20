@@ -21,6 +21,6 @@ class Guest(models.Model):
 class Reservation(models.Model):
     guest = models.ForeignKey(Guest, related_name='reservations', on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, related_name='reservations', on_delete=models.CASCADE)
-    
+
     def __str__(self) -> str:
         return f"{self.guest.name} | {self.movie.movie}"
