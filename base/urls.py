@@ -30,6 +30,13 @@ urlpatterns = [
     path('jsonresno/', views.classic, name='jsonresno_guests'),
     path('jsonresmodel/', views.withModel, name='jsonresmo_guests'),
     path('rest/fbv/guests/', views.guest_list, name='fbv_guest_list'),
+
+    # find movie 
+    path('rest/fbv/findmovie', views.find_movie, name='fbv_find_movie'),
+
+    #9 new reservation
+    path('rest/fbv/newreservation',views.new_reservation, name='fbv_newreservation'),
+
     path('rest/fbv/guests/<int:pk>/', views.guest_pk_query, name='fbv_guest_pk_query'),
     path('rest/cbv/guests/', cbviews.GuestList.as_view(), name='cbv_guest_list'),
     path('rest/cbv/guests/<int:pk>/', cbviews.GuestPkQuery.as_view(), name='cbv_guest_pk_query'),

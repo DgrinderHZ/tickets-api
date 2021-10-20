@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import status
 
-from tickets.models import Guest
-from tickets.serializers import GuestSerializer
+from tickets.models import Guest, Movie, Reservation
+from tickets.serializers import GuestSerializer, MovieSerializer
 
 
 # Method 1: No REST, No Model
@@ -77,10 +77,40 @@ def guest_pk_query(request, pk):
 
 
 @api_view(['GET'])
+def find_movie(request):
+    movies = Movie.objects.filter(
+        hall=request.data['hall'],
+        movie=request.data['movie'],
+    )
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def new_reservation(request):
+
+    movie = Movie.objects.get(
+        hall=request.data['hall'],
+        movie=request.data['movie'],
+    )
+    guest = Guest()
+    guest.name = request.data['name']
+    guest.mobile = request.data['mobile']
+    guest.save()
+
+    reservation = Reservation()
+    reservation.guest = guest
+    reservation.movie = movie
+    reservation.save()
+
+    return Response(status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
 def api_root(request, format=None):
     """
     Function based view:
-    -  Snippets API root.
+    -  Tickets API root.
     """
     return Response({
         'jsonresno_guests': reverse('jsonresno_guests', request=request, format=format),
