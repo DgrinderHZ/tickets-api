@@ -91,5 +91,7 @@ def api_root(request, format=None):
         'gnrx_guest_list': reverse('gnrx_guest_list', request=request, format=format),
         # For viewsets: <basename>-<action>
         'guest_viewset': reverse('guests-list', request=request, format=format),
+        'movie_viewset': reverse('movies-list', request=request, format=format),
+        'reservation_viewset': reverse('reservations-list', request=request, format=format),
 
     })

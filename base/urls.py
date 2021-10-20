@@ -22,6 +22,8 @@ from tickets import views, cbviews
 
 router = DefaultRouter()
 router.register("guests", cbviews.GuestViewSet, basename='guests')
+router.register("movies", cbviews.MovieViewSet, basename='movies')
+router.register("reservations", cbviews.ReservationViewSet, basename='reservations')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

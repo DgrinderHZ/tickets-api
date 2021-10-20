@@ -4,8 +4,8 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Guest
-from .serializers import GuestSerializer
+from .models import Guest, Movie, Reservation
+from .serializers import GuestSerializer, MovieSerializer, ReservationSerializer
 
 
 # Continuation of views.py
@@ -135,3 +135,29 @@ class GuestViewSet(viewsets.ModelViewSet):
     """
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+
+
+class MovieViewSet(viewsets.ModelViewSet):
+    """
+    Class based view, viewset Based:
+    - List all code Movies,
+    - Create,
+    - Retrieve,
+    - Update or
+    - Delete a Movie.
+    """
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+
+
+class ReservationViewSet(viewsets.ModelViewSet):
+    """
+    Class based view, viewset Based:
+    - List all code Reservations,
+    - Create,
+    - Retrieve,
+    - Update or
+    - Delete a Reservation.
+    """
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
